@@ -1,0 +1,22 @@
+citHeader("To cite 'reldist' in publications use:")
+
+citEntry(entry="Book",
+         title = "Relative Distribution Methods in the Social Sciences",
+         author = personList(as.person("Mark S. Handcock"),
+                             as.person("Martina Morris")), 
+         publisher = "Springer",
+         address      = "New York",
+         year         = 1999,
+         note         = "ISBN 0-387-98778-9",
+         url          = "http://www.csde.washington.edu/RelDist",
+         
+         textVersion = 
+         paste("Mark S. Handcock and Martina Morris (1999)", 
+               "Relative Distribution Methods in the Social Sciences.",
+               "Springer, New York, ISBN 0-387-98778-9.",
+               "URL http://www.csde.washington.edu/RelDist"
+               )
+         )
+
+citFooter("We have invested a lot of time and effort in creating 'reldist',",
+          "please cite it when using it for your analysis.")

@@ -923,6 +923,7 @@
     ywgt<-rep(1,length=m)/m
     missargs["ywgt"] <- FALSE
   }
+  if(all(nas)){ stop("All the y values are missing!") }
   y <- y[!nas]
   if(!really.missing(z,missargs)){z <- z[!nas]}
   if(!really.missing(yowgt,missargs)){
@@ -934,6 +935,7 @@
     yowgt<-rep(1,length=n)/n
     missargs["yowgt"] <- FALSE
   }
+  if(all(nas)){ stop("All the yo values are missing!") }
   yo <- yo[!nas]
   if(!really.missing(zo,missargs)){zo <- zo[!nas]}
 #
@@ -1196,6 +1198,7 @@
   }else{
     nas <- is.na(y)
   }
+  if(all(nas)){ stop("All the y values are missing!") }
   y <- y[!nas]
   if(!really.missing(yowgt,missargs)){
     nas <- is.na(yo) | is.na(yowgt)
@@ -1203,6 +1206,7 @@
   }else{
     nas <- is.na(yo)
   }
+  if(all(nas)){ stop("All the yo values are missing!") }
   yo <- yo[!nas]
 #
   n <- length(yo)

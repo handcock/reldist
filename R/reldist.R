@@ -1,5 +1,5 @@
 #
-# This is version 1.5 of the reldist functions.
+# This is version 1.6 of the reldist functions.
 #   by Mark S. Handcock
 #
 #   July 1, 2004
@@ -379,7 +379,7 @@
 #     based on a grid search
 #
       require(mgcv, quietly = TRUE, keep.source = FALSE)
-      gamdata <<-data.frame(x=r,y=m*xx)
+      gamdata <<- data.frame(x=r,y=m*xx)
       maxsmooth <- max(aicc)
       if(smooth<=0){
         aicc <- cbind(aicc,aicc)
@@ -416,7 +416,7 @@
       scalef <- binn/sum(gpdf)
       gpdf <- gpdf * scalef
       if(ci){
-        gpdfse <- predict.gam(yl, type = "response", se.fit=T)$se.fit
+        gpdfse <- predict.gam(yl, type = "response", se.fit=TRUE)$se.fit
         gpdfse <- as.vector(gpdfse) * scalef
       }
     }
@@ -865,41 +865,6 @@
  "wtd.mean" <- function(x, weight=rep(1,length(x))) {
  	(sum(x * weight)/sum(weight))
  }
- "wtd.median"<- function(x, na.rm = FALSE, weight=FALSE) {
- 	if(mode(x) != "numeric")
- 		stop("need numeric data")
- 	x <- as.vector(x)
- 	wnas <- is.na(x)
- 	if(sum(wnas)>0) {
- 		if(na.rm)
- 		 x <- x[!wnas]
- 	  	 if(!missing(weight)){weight <- weight[!wnas]}
- 		else return(NA)
- 	}
- 	n <- length(x)
- 	half <- (n + 1)/2
- 	if(n %% 2 == 1) {
- 	  if(!missing(weight)){
- 		weight <- weight/sum(weight)
- 		sx <- sort.list(x)
- 		sweight <- cumsum(weight[sx])
- 		min(x[sx][sweight >= 0.5])
- 	  }else{
- 		x[order(x)[half]]
- 	  }
- 	}
- 	else {
- 	  if(!missing(weight)){
- 		weight <- weight/sum(weight)
- 		sx <- sort.list(x)
- 		sweight <- cumsum(weight[sx])
- 		min(x[sx][sweight >= 0.5])
- 	  }else{
- 		half <- floor(half) + 0:1
- 		sum(x[order(x)[half]])/2
- 	  }
- 	}
- }
  "rmdata" <- function(y, yo, ywgt=FALSE,yowgt=FALSE,
                       z=FALSE, zo=FALSE,
                       show="none", decomp="locadd",
@@ -997,7 +962,7 @@
    if(show=="residual"){
     if(location=="median"){
      if(!really.missing(yowgt,missargs) ){
-      yo <- wtd.median(y,weight=ywgt)*yo/wtd.median(yo,weight=yowgt)
+      yo <- wtd.quantile(y,weight=ywgt)*yo/wtd.quantile(yo,weight=yowgt)
      }else{
       yo <- median(y)*yo/median(yo)
      }
@@ -1012,7 +977,7 @@
    if(show=="effect"){
     if(location=="median"){
      if(!really.missing(ywgt,missargs)){
-      y <- wtd.median(y,weight=ywgt)*yo/wtd.median(yo,weight=yowgt)
+      y <- wtd.quantile(y,weight=ywgt)*yo/wtd.quantile(yo,weight=yowgt)
       ywgt <- yowgt
       m <- n
      }else{
@@ -1038,7 +1003,7 @@
    if(show=="residual"){
     if(location=="median"){
      if(!really.missing(yowgt,missargs) ){
-      yo <- wtd.median(y,weight=ywgt)+yo-wtd.median(yo,weight=yowgt)
+      yo <- wtd.quantile(y,weight=ywgt)+yo-wtd.quantile(yo,weight=yowgt)
      }else{
       yo <- median(y)+(yo-median(yo))
      }
@@ -1053,7 +1018,7 @@
    if(show=="effect"){
     if(location=="median"){
      if(!really.missing(ywgt,missargs)){
-      y <- wtd.median(y,weight=ywgt)+yo-wtd.median(yo,weight=yowgt)
+      y <- wtd.quantile(y,weight=ywgt)+yo-wtd.quantile(yo,weight=yowgt)
       ywgt <- yowgt
       m <- n
      }else{
@@ -1079,8 +1044,8 @@
    if(show=="residual"){
     if(location=="median" & scale=="IQR"){
      if(!really.missing(yowgt,missargs)){
-      yo <- wtd.median(y,weight=ywgt)+wtd.iqr(y,weight=ywgt)*
-            (yo-wtd.median(yo,weight=yowgt))/wtd.iqr(yo,weight=yowgt)
+      yo <- wtd.quantile(y,weight=ywgt)+wtd.iqr(y,weight=ywgt)*
+            (yo-wtd.quantile(yo,weight=yowgt))/wtd.iqr(yo,weight=yowgt)
      }else{
       yo <- median(y)+iqr(y)*(yo-median(yo))/iqr(yo)
      }
@@ -1096,8 +1061,8 @@
    if(show=="effect"){
     if(location=="median"){
      if(!really.missing(ywgt,missargs)){
-      y <- wtd.median(y,weight=ywgt)+wtd.iqr(y,weight=ywgt)*
-            (yo-wtd.median(yo,weight=yowgt))/wtd.iqr(yo,weight=yowgt)
+      y <- wtd.quantile(y,weight=ywgt)+wtd.iqr(y,weight=ywgt)*
+            (yo-wtd.quantile(yo,weight=yowgt))/wtd.iqr(yo,weight=yowgt)
       ywgt <- yowgt
       m <- n
      }else{
@@ -1268,7 +1233,7 @@
    if(show=="residual"){
     if(location=="median"){
      if(!really.missing(yowgt,missargs)){
-      yo <- wtd.median(y,weight=ywgt)*yo/wtd.median(yo,weight=yowgt)
+      yo <- wtd.quantile(y,weight=ywgt)*yo/wtd.quantile(yo,weight=yowgt)
      }else{
       yo <- median(y)*yo/median(yo)
      }
@@ -1283,7 +1248,7 @@
    if(show=="effect"){
     if(location=="median"){
      if(!really.missing(ywgt,missargs)){
-      y <- wtd.median(y,weight=ywgt)*yo/wtd.median(yo,weight=yowgt)
+      y <- wtd.quantile(y,weight=ywgt)*yo/wtd.quantile(yo,weight=yowgt)
       ywgt <- yowgt
       m <- n
      }else{
@@ -1309,7 +1274,7 @@
    if(show=="residual"){
     if(location=="median"){
      if(!really.missing(yowgt,missargs)){
-      yo <- wtd.median(y,weight=ywgt)+yo-wtd.median(yo,weight=yowgt)
+      yo <- wtd.quantile(y,weight=ywgt)+yo-wtd.quantile(yo,weight=yowgt)
      }else{
       yo <- median(y)+(yo-median(yo))
      }
@@ -1324,7 +1289,7 @@
    if(show=="effect"){
     if(location=="median"){
      if(!really.missing(ywgt,missargs)){
-      y <- wtd.median(y,weight=ywgt)+yo-wtd.median(yo,weight=yowgt)
+      y <- wtd.quantile(y,weight=ywgt)+yo-wtd.quantile(yo,weight=yowgt)
       ywgt <- yowgt
       m <- n
      }else{
@@ -1350,8 +1315,8 @@
    if(show=="residual"){
     if(location=="median" & scale=="IQR"){
      if(!really.missing(yowgt,missargs)){
-      yo <- wtd.median(y,weight=ywgt)+wtd.iqr(y,weight=ywgt)*
-            (yo-wtd.median(yo,weight=yowgt))/wtd.iqr(yo,weight=yowgt)
+      yo <- wtd.quantile(y,weight=ywgt)+wtd.iqr(y,weight=ywgt)*
+            (yo-wtd.quantile(yo,weight=yowgt))/wtd.iqr(yo,weight=yowgt)
      }else{
       yo <- median(y)+iqr(y)*(yo-median(yo))/iqr(yo)
      }
@@ -1367,8 +1332,8 @@
    if(show=="effect"){
     if(location=="median"){
      if(!really.missing(ywgt,missargs)){
-      y <- wtd.median(y,weight=ywgt)+wtd.iqr(y,weight=ywgt)*
-            (yo-wtd.median(yo,weight=yowgt))/wtd.iqr(yo,weight=yowgt)
+      y <- wtd.quantile(y,weight=ywgt)+wtd.iqr(y,weight=ywgt)*
+            (yo-wtd.quantile(yo,weight=yowgt))/wtd.iqr(yo,weight=yowgt)
       ywgt <- yowgt
       m <- n
      }else{
@@ -1781,7 +1746,7 @@ rdsamp <- function(targetvalues, samplevalues,
 #	    spb <- table(cut(samplevalues,breaks=sy,include.lowest = TRUE,labels=FALSE))
 	    spb <- hist(samplevalues,breaks=sy,plot=FALSE,include.lowest = TRUE)$counts
 	  }else{
-	    samplevalueswgt <- samplevalueswgt/mean(sampleprobswgt)
+	    samplevalueswgt <- samplevalueswgt/mean(samplevalueswgt)
 	    xxx <- cut(samplevalues,breaks=sy,include.lowest = TRUE,labels=FALSE)
 	    spb <- rep(0,length=length(sy)-1)
 	    for (i in unique(xxx)){    
@@ -1953,7 +1918,7 @@ rdeciles <- function(y, yo, ywgt=FALSE,yowgt=FALSE,
 #
 # Call converted Pascal program
 #
-  aaa <- unix("cao < cao.in > cao.out",output=FALSE)
+  aaa <- system("cao < cao.in > cao.out")
   out <- matrix(as.numeric(scan("cao.out")), ncol = 2,byrow=TRUE)
 # out[is.na(out[, 2]), 2] <- 0.1
   out[is.na(out[, 2]), 2] <- mean(as.numeric(out[!is.na(out[, 2]), 2]))
@@ -1971,29 +1936,4 @@ resplot <- function(x, standardize=TRUE,
   reldist(y=pnorm(q=stdres),
           ylim=xrange,
           xlab=xlab, ...)
-}
-######################################################################
-.First.lib <- function(lib, pkg){
-#   library.dynam("ergmtesting", pkg, lib)
-    if(R.version$major=="1"){
-     ehelp <- help(package="reldist")$info[[2]][[2]]
-     cat(paste("'",ehelp[4],"'\n",
-               "Version ",ehelp[2],
-               " created on ",ehelp[3],".\n", sep=""))
-    }else{
-#    ehelp <- help(package="reldist")$info[[2]]
-     if(R.version$minor < "1.0"){
-      ehelp <- library(help="reldist",lib.loc=NULL,character.only=TRUE)$info[[2]]
-     }else{
-      ehelp <- library(help="reldist",lib.loc=NULL,character.only=TRUE)$info[[1]]
-     }
-     cat(paste(substring(ehelp[4],first=16),"\n",
-               "Version ",substring(ehelp[2],first=16),
-               " created on ",
-                substring(ehelp[3],first=16),".\n", sep=""))
-    }
-    cat(paste("copyright (c) 2003, Mark S. Handcock, University of Washington\n",
-"                    Martina Morris, University of Washington\n",sep=""))
-    cat('Type help(package="reldist") to get started.\n')
-#   require(graphtesting)
 }

@@ -423,10 +423,10 @@ format(100*cbind(g10hs$deciles,g10sc$deciles,
                  g10sc$deciles-g10hs$deciles),digits=3)
 #
 collectresults <- c(
-  wtd.median(pwhsr,weight=wgthsr),
-  wtd.median(pwhso,weight=wgthso),
-  wtd.median(pwhsr,weight=wgthsr)-wtd.median(pwhso,weight=wgthso),
-  exp(wtd.median(pwhsr,weight=wgthsr)-wtd.median(pwhso,weight=wgthso)),
+  wtd.quantile(pwhsr,weight=wgthsr),
+  wtd.quantile(pwhso,weight=wgthso),
+  wtd.quantile(pwhsr,weight=wgthsr)-wtd.quantile(pwhso,weight=wgthso),
+  exp(wtd.quantile(pwhsr,weight=wgthsr)-wtd.quantile(pwhso,weight=wgthso)),
   g10hs$entropy,
   g10hs$entropy-reldist(y=pwhsr, yo=pwhso, ywgt=wgthsr, yowgt=wgthso, quiet=FALSE,
                      show="residual",graph=FALSE)$entropy,
@@ -438,10 +438,10 @@ collectresults <- c(
 )
 #
 collectresults <- cbind(collectresults,c(
-  wtd.median(pwscr,weight=wgtscr),
-  wtd.median(pwsco,weight=wgtsco),
-  wtd.median(pwscr,weight=wgtscr)-wtd.median(pwsco,weight=wgtsco),
-  exp(wtd.median(pwscr,weight=wgtscr)-wtd.median(pwsco,weight=wgtsco)),
+  wtd.quantile(pwscr,weight=wgtscr),
+  wtd.quantile(pwsco,weight=wgtsco),
+  wtd.quantile(pwscr,weight=wgtscr)-wtd.quantile(pwsco,weight=wgtsco),
+  exp(wtd.quantile(pwscr,weight=wgtscr)-wtd.quantile(pwsco,weight=wgtsco)),
   g10sc$entropy,
   g10sc$entropy-reldist(y=pwscr, yo=pwsco, ywgt=wgtscr, yowgt=wgtsco, quiet=FALSE,
                      show="residual",graph=FALSE)$entropy,
@@ -469,25 +469,25 @@ rdhsrscr <- rdeciles(y=pwhsr, yo=pwscr, ywgt=wgthsr, yowgt=wgtscr, binn=binn)
 rdhsosco <- rdeciles(y=pwhso, yo=pwsco, ywgt=wgthso, yowgt=wgtsco, binn=binn)
 #
 mscrdhsrscr <- rdeciles(
- y=pwhsr - wtd.median(pwhsr, weight=wgthsr) + wtd.median(pwhso, weight=wgthso),
-yo=pwscr - wtd.median(pwscr, weight=wgtscr) + wtd.median(pwsco, weight=wgtsco),
+ y=pwhsr - wtd.quantile(pwhsr, weight=wgthsr) + wtd.quantile(pwhso, weight=wgthso),
+yo=pwscr - wtd.quantile(pwscr, weight=wgtscr) + wtd.quantile(pwsco, weight=wgtsco),
 ywgt=wgthsr, yowgt=wgtscr, binn=binn)
 #
 mhsrdhsrscr <- rdeciles(
- y=pwhso - wtd.median(pwhso, weight=wgthso) + wtd.median(pwhsr, weight=wgthsr),
-yo=pwsco - wtd.median(pwsco, weight=wgtsco) + wtd.median(pwscr, weight=wgtscr),
+ y=pwhso - wtd.quantile(pwhso, weight=wgthso) + wtd.quantile(pwhsr, weight=wgthsr),
+yo=pwsco - wtd.quantile(pwsco, weight=wgtsco) + wtd.quantile(pwscr, weight=wgtscr),
 ywgt=wgthso, yowgt=wgtsco, binn=binn)
 #
 m1rdhsrscr <- rdeciles(yo=pwsco, 
-y=pwhsr - wtd.median(pwhsr, weight=wgthsr) + wtd.median(pwhso, weight=wgthso),
+y=pwhsr - wtd.quantile(pwhsr, weight=wgthsr) + wtd.quantile(pwhso, weight=wgthso),
 yowgt=wgtsco, ywgt=wgthsr, binn=binn)
 #
 m2rdhsrscr <- rdeciles(y=pwhso, 
-yo=pwscr - wtd.median(pwscr, weight=wgtscr) + wtd.median(pwsco, weight=wgtsco),
+yo=pwscr - wtd.quantile(pwscr, weight=wgtscr) + wtd.quantile(pwsco, weight=wgtsco),
 ywgt=wgthso, yowgt=wgtscr, binn=binn)
 #
 m3rdhsrscr <- rdeciles(y=pwhsr, 
-yo=pwsco - wtd.median(pwsco, weight=wgtsco) + wtd.median(pwscr, weight=wgtscr),
+yo=pwsco - wtd.quantile(pwsco, weight=wgtsco) + wtd.quantile(pwscr, weight=wgtscr),
 yowgt=wgtsco, ywgt=wgtscr, binn=binn)
 #
 achange <- binn*(rdhsrscr$x - rdhsosco$x)

@@ -1,5 +1,24 @@
-citHeader("To cite 'reldist' in publications use:")
+reldistauthors <- c("Mark S. Handcock")
+projhomepage <- "http://www.stat.ucla.edu/~handcock/RelDist"
 
+reldisttitle <- "Relative Distribution Methods"
+reldistversion <- "1.6"
+reldistyear <- "1999"
+
+reldisttitle <- "Relative Distribution Methods"
+reldistdesc <- packageDescription("reldist")
+reldistversion <- reldistdesc$Version
+reldistdate <- reldistdesc$Date
+s <- regexpr("20[0-9][0-9]", reldistdate)
+reldistyear <- ifelse (s==-1, "2003", substr(reldistdate, s, s+3))
+
+citHeader(
+   "If you are using ideas from the 'Relative Distribution Methods' book for research that will be published, ",
+   "we request that you acknowledge this by citing the book as shown below.\n\n",
+   "If you use this 'reldist' package, please also use the second citation below.\n\n",
+   'For BibTeX format, use toBibtex(citation("reldist")).',
+   sep="")
+   
 citEntry(entry="Book",
          title = "Relative Distribution Methods in the Social Sciences",
          author = personList(as.person("Mark S. Handcock"),
@@ -8,15 +27,34 @@ citEntry(entry="Book",
          address      = "New York",
          year         = 1999,
          note         = "ISBN 0-387-98778-9",
-         url          = "http://www.csde.washington.edu/RelDist",
+         url          = "http://www.stat.ucla.edu/~handcock/RelDist",
          
          textVersion = 
          paste("Mark S. Handcock and Martina Morris (1999)", 
                "Relative Distribution Methods in the Social Sciences.",
                "Springer, New York, ISBN 0-387-98778-9.",
-               "URL http://www.csde.washington.edu/RelDist"
+               "URL http://www.stat.ucla.edu/~handcock/RelDist"
                )
          )
 
-citFooter("We have invested a lot of time and effort in creating 'reldist',",
-          "please cite it when using it for your analysis.")
+citEntry(entry="Manual",
+         author = reldistauthors,
+         title = reldisttitle,
+         year         = reldistyear,
+         note         = paste("Version ", reldistversion,
+                        ".  Project home page at \\ url{", projhomepage, "}", 
+                        sep=""),
+         address      = "Los Angeles, CA",
+         url          = "http://CRAN.R-project.org/package=reldist",
+         textVersion = paste(paste(reldistauthors, collapse=", "), " (", reldistyear,
+               "), ", reldisttitle, ". Version ", reldistversion,
+               ". Project home page at ", projhomepage,
+               ". URL http://CRAN.R-project.org/package=reldist.",
+               sep="")
+         )
+
+         
+citFooter("We have invested a lot of time and effort in creating the",
+          "'reldist' package for use by other researchers.",
+          "Please cite it in all papers where it is used.")
+          

@@ -379,14 +379,17 @@
 #     based on a grid search
 #
       require(mgcv, quietly = TRUE, keep.source = FALSE)
-      gamdata <<- data.frame(x=r,y=m*xx)
+      is.wholenumber <- function(x, tol = .Machine$double.eps^0.5){
+        abs(x - round(x)) < tol
+      }
+      family <- ifelse(is.wholenumber(m*xx),"poisson","quasi")
       maxsmooth <- max(aicc)
       if(smooth<=0){
         aicc <- cbind(aicc,aicc)
         dimnames(aicc)[[2]] <- c("smooth","aicc")
         for(i in seq(along=aicc[,1])){
          yl <- gam(y ~ s(x, bs="cr"),sp=aicc[i,1],
-	           family = "poisson", data=gamdata)
+	           family = family, data=data.frame(x=r,y=m*xx))
          df <- summary(yl)$edf + 2
          if(df >= binn - 2){
            aicc[i,2] <- Inf
@@ -400,11 +403,11 @@
       }
       if(really.missing(smooth, missargs)){
          yl <- gam(y ~ s(x, bs="cr"), scale=-1,
-	           family = "poisson", data=gamdata)
+	           family = family, data=data.frame(x=r,y=m*xx))
          smooth <- yl$sp
       }else{
        yl <- gam(y ~ s(x, bs="cr"), sp=smooth,
-            family = "poisson", data=gamdata) 
+            family = family, data=data.frame(x=r,y=m*xx)) 
       }
       if(smooth > maxsmooth){
         cat(paste("Smoothing the maximum amount\n"))

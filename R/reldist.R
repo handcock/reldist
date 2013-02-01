@@ -358,7 +358,7 @@
  #   and AIC to choose the bandwidth
  #   based on a grid search
  #
-     require(locfit, quietly = TRUE, keep.source = FALSE)
+     require(locfit, quietly = TRUE)
  #
      yl <- locfit(~ x, weights=ywgt, xlim=c(0,1),
            alpha=c(2*smooth,0.3), flim=c(0,1))
@@ -378,7 +378,7 @@
 #     and AICC to choose the bandwidth
 #     based on a grid search
 #
-      require(mgcv, quietly = TRUE, keep.source = FALSE)
+      require(mgcv, quietly = TRUE)
       is.wholenumber <- function(x, tol = .Machine$double.eps^0.5){
         abs(x - round(x)) < tol
       }
@@ -429,7 +429,7 @@
  #     Anscombe transformation to stabilize variances
  #     not quite as good
  #
- #     require(modreg, quietly = TRUE, keep.source = FALSE)
+ #     require(modreg, quietly = TRUE)
  #
        vstxx <- 2*sqrt(m*xx + 3/8)
        yl <- loess(vstxx ~ r, span = smooth, degree = 1)
@@ -1553,7 +1553,7 @@ rddist <- function(y, yo, add=FALSE, ylim=NULL,ywgt=FALSE,yowgt=FALSE,
   y2 <- rep(gx,c(rep(2,nx-1),4))[-1]             
   x2 <- c(rep(x,rep(2,nx)),1)  
 #
-  require(mgcv, quietly = TRUE, keep.source = FALSE)
+  require(mgcv, quietly = TRUE)
   r <- seq(0, 1, length = binn + 1)[-1] - 0.5/binn
   pdfgdd <- approx(x=c(0,x),y=c(0,cumsum(pix)), xout=r)
   pdfgdd$y <- diff(c(0,pdfgdd$y))
@@ -1909,29 +1909,29 @@ rdeciles <- function(y, yo, ywgt=FALSE,yowgt=FALSE,
 #
   list(x=as.numeric(ratio),refcuts=refcuts,yx=yx,yox=as.numeric(yox))
 }
-"relasp"<- function(y,yo,binn=100,boundary=0.05){
-  y <- sort(y)
-  m <- length(y)
-  y <- c(min(y)-y[1:(boundary*m)],y,2*max(y)-y[((1-boundary)*m):m])
-  m <- length(y)
-  yo <- sort(yo)
-  n <- length(yo)
-  yo <- c(min(yo)-yo[1:(0.1*n)],yo,2*max(yo)-yo[(0.9*n):n])
-  n <- length(yo)
-  write(binn, "cao.in", append = FALSE)
-  write(n+m, "cao.in", append = TRUE)
-  rdata <- cbind(0,c(y,yo),1,rep(c(1,-1),c(n,m)))
-  write(t(rdata), "cao.in", append = TRUE, ncol = 4)
-#
-# Call converted Pascal program
-#
-  aaa <- system("cao < cao.in > cao.out")
-  out <- matrix(as.numeric(scan("cao.out")), ncol = 2,byrow=TRUE)
-# out[is.na(out[, 2]), 2] <- 0.1
-  out[is.na(out[, 2]), 2] <- mean(as.numeric(out[!is.na(out[, 2]), 2]))
-  dimnames(out) <- list(NULL,c("x","h(x)"))
-  out
-}
+#"relasp"<- function(y,yo,binn=100,boundary=0.05){
+#  y <- sort(y)
+#  m <- length(y)
+#  y <- c(min(y)-y[1:(boundary*m)],y,2*max(y)-y[((1-boundary)*m):m])
+#  m <- length(y)
+#  yo <- sort(yo)
+#  n <- length(yo)
+#  yo <- c(min(yo)-yo[1:(0.1*n)],yo,2*max(yo)-yo[(0.9*n):n])
+#  n <- length(yo)
+#  write(binn, "cao.in", append = FALSE)
+#  write(n+m, "cao.in", append = TRUE)
+#  rdata <- cbind(0,c(y,yo),1,rep(c(1,-1),c(n,m)))
+#  write(t(rdata), "cao.in", append = TRUE, ncol = 4)
+##
+## Call converted Pascal program
+##
+#  aaa <- system("cao < cao.in > cao.out")
+#  out <- matrix(as.numeric(scan("cao.out")), ncol = 2,byrow=TRUE)
+## out[is.na(out[, 2]), 2] <- 0.1
+#  out[is.na(out[, 2]), 2] <- mean(as.numeric(out[!is.na(out[, 2]), 2]))
+#  dimnames(out) <- list(NULL,c("x","h(x)"))
+#  out
+#}
 resplot <- function(x, standardize=TRUE,
                     xlab="Gaussian Cumulative Proportion", ...){
   if(standardize){

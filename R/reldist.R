@@ -46,7 +46,7 @@
   aicc=seq(0.0001, 5, length=30),
   deciles=(0:10)/10,
   discrete=FALSE,
-  method="gam",
+  method="bgk",
   ...) {
 #
 # missing test
@@ -424,6 +424,20 @@
       }
     }
 #
+   if(method=="bgk"){
+#
+#     Use Botev. Z.I., Grotowski J.F and Kroese D. P. (2010)
+#
+      a=bgk_kde(x,n=2^(ceiling(log(binn)/log(2))),MIN=0,MAX=1,smooth=4*smooth/0.35)
+#     gpdf <- approx(x=a[1,],y=a[2,],xout=r,rule=2)$y
+#     Use an interpolating cubic spline
+      gpdf <- spline(x=a[1,],y=a[2,],xout=r)$y
+#     gpdf <- predict(smooth.spline(x=a[1,],y=a[2,],df=45*smooth),x=r)$y
+#
+      scalef <- binn/sum(gpdf)
+      gpdf <- gpdf * scalef
+    }
+#
    if(method=="quick"){
  #
  #     Anscombe transformation to stabilize variances
@@ -492,7 +506,7 @@
           xaxt="n", yaxt="n", ...)
      }
      if(add){
-       if(method != "gam" & method != "histogram" & method != "quick"){
+       if(method != "bgk" & method != "gam" & method != "histogram" & method != "quick"){
          graph <- FALSE}
        if(cdfplot){
          lines(x = r, y = cdfgr, lty=lty)
@@ -525,7 +539,7 @@
          ...)
      }
      if(add){
-       if(method != "gam" & method != "histogram" & method != "quick"){
+       if(method != "bgk" & method != "gam" & method != "histogram" & method != "quick"){
          graph <- FALSE}
        if(cdfplot){
          lines(x = r, y = cdfgr, lty=lty)

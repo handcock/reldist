@@ -26,7 +26,7 @@ reldist(y, yo=FALSE, ywgt=FALSE,yowgt=FALSE,
   aicc=seq(0.0001, 5, length=30),
   deciles=(0:10)/10,
   discrete=FALSE,
-  method="gam",
+  method="bgk",
   \dots)
 }
 \arguments{
@@ -44,10 +44,13 @@ reldist(y, yo=FALSE, ywgt=FALSE,yowgt=FALSE,
     it is the minimum number of values to pool in the reference
     distribution in the probabiliy mass function estimate.}
   \item{method}{Method used to estimate the relative density. The default
-    (\code{"gam"}) uses a local likelihood approach based on smoothed Poisson 
-    regression. The option \code{"loclik"} uses log-splines. The option \code{"quick"} uses
-    the Anscombe transformation to stabilize variances. In versions prior to
-    1.3 the \code{"quick"} approach was used.}
+    (\code{"bgk"}) uses a gaussian kernel density estimator for bounded
+    domain one-dimensional data developed by Botev, Grotowski and Kroese
+    (2010). The option (\code{"gam"}) uses a local likelihood approach
+    based on smoothed Poisson regression. The option \code{"loclik"} uses
+    log-splines. The option \code{"quick"} uses the Anscombe transformation
+    to stabilize variances. In versions prior to 1.3 the \code{"quick"}
+    approach was used.}
   \item{graph}{Graph the results on the current device.}
   \item{bar}{Graph the deciles on the current device.  Possible values
     of \code{bar} are \code{"no"} (no deciles plotted), \code{"yes"}
@@ -167,5 +170,9 @@ reldist(y=recent$chpermwage, yo=original$chpermwage,
 \references{
 For more examples see the tech report by Handcock & Aldrich (2002)
 available at \url{http://www.csss.washington.edu/Papers}
+
+Z. I. Botev, J. F. Grotowski and D. P. Kroese
+\emph{Kernel Density Estimation Via Diffusion}
+Annals of Statistics, 2010, Volume 38, Number 5, Pages 2916-2957.
 }
 \keyword{distribution}

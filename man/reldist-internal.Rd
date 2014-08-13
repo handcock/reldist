@@ -10,6 +10,7 @@
 \alias{rmdata}
 \alias{rpluy}
 \alias{rpy}
+\alias{bgk_kde}
 \alias{wtd.mean}
 \alias{wtd.median}
 \alias{wtd.var}

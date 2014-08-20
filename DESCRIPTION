@@ -10,6 +10,7 @@ Description: R functions for the comparison of distributions.
  "Relative Distribution Methods in the Social Sciences" 
  by Mark S. Handcock and Martina Morris, 
  Springer-Verlag, 1999, Springer-Verlag, ISBN 0387987789
-Suggests: locfit, mgcv
+Depends: mgcv
+Suggests: locfit
 License: GPL-3 + file LICENSE
 URL: http://www.stat.ucla.edu/~handcock/RelDist

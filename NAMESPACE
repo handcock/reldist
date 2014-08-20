@@ -1,4 +1,5 @@
 importFrom(utils, packageDescription)
+importFrom(mgcv, gam, predict.gam)
 
 # Export all names that do not begin with a dot.
 exportPattern("^[^\\.]")

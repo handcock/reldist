@@ -2,7 +2,7 @@
 \alias{gini}
 \title{Compute the Gini Coefficient}
 \description{
- computes the Gini coefficient based on (possibly weighted) sample data
+ Computes the Gini coefficient based on (possibly weighted) sample data
 }
 \usage{
  gini(x,  weights=rep(1,length=length(x)))
@@ -47,7 +47,7 @@ Annette D. Bernhardt, Martina Morris, Mark S. Handcock and Marc Scott.
 Wheatshef, 1995.
 }
 
-\author{Mark S. Handcock \email{handcock@stat.washington.edu}}
+\author{Mark S. Handcock \email{handcock@stat.ucla.edu}}
 
 \seealso{\code{\link{reldist}}, \code{\link{nls}}}
 

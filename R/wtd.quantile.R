@@ -41,7 +41,7 @@ wtd.quantile <- function(x, q=0.5, na.rm = FALSE, weight=FALSE) {
  		weight <- weight/sum(weight)
  		sx <- sort.list(x)
  		sweight <- cumsum(weight[sx])
- 		min(x[sx][sweight >= 0.5])
+ 		min(x[sx][sweight >= q])
  	  }else{
  		half <- floor(half) + 0:1
  		sum(x[order(x)[half]])/2

@@ -27,6 +27,7 @@ reldist(y, yo=FALSE, ywgt=FALSE,yowgt=FALSE,
   deciles=(0:10)/10,
   discrete=FALSE,
   method="bgk",
+  y0=NULL,
   \dots)
 }
 \arguments{
@@ -42,9 +43,9 @@ reldist(y, yo=FALSE, ywgt=FALSE,yowgt=FALSE,
     value less than zero is specified then the value is chosen
     to minimize a corrected AIC. If \code{discrete=TRUE}
     it is the minimum number of values to pool in the reference
-    distribution in the probabiliy mass function estimate.}
+    distribution in the probability mass function estimate.}
   \item{method}{Method used to estimate the relative density. The default
-    (\code{"bgk"}) uses a gaussian kernel density estimator for bounded
+    (\code{"bgk"}) uses a Gaussian kernel density estimator for bounded
     domain one-dimensional data developed by Botev, Grotowski and Kroese
     (2010). The option (\code{"gam"}) uses a local likelihood approach
     based on smoothed Poisson regression. The option \code{"loclik"} uses
@@ -54,8 +55,8 @@ reldist(y, yo=FALSE, ywgt=FALSE,yowgt=FALSE,
   \item{graph}{Graph the results on the current device.}
   \item{bar}{Graph the deciles on the current device.  Possible values
     of \code{bar} are \code{"no"} (no deciles plotted), \code{"yes"}
-    (deciles plotted with the non-parametric fit, \code{"only"}(deciles
-    plotted without non-parametric fit).}
+    (deciles plotted with the non-parametric fit,\cr
+    \code{"only"}(deciles plotted without non-parametric fit).}
   \item{add}{Add the density to the current plot?}
   \item{ylim}{plotting limit for the vertical axis.}
   \item{lty}{Line type to be used for the density.}
@@ -76,20 +77,22 @@ reference distribution.}
   \item{ywgt}{Weights on the comparison sample.}
   \item{yowgt}{Weights on the reference sample.}
   \item{z}{Covariate on the comparison sample to be used to adjust it
-to the reference distribution. Only used if the form of matching 
-specified in \code{decomp="covariate"}.}
+       to the reference distribution. Only used if the form of matching 
+       specified in\cr
+       \code{decomp="covariate"}.}
   \item{zo}{Covariate on the reference sample to be used in
   the adjustment.  to the reference distribution. Only used if
-  the form of matching specified in \code{decomp="covariate"}.}
+  the form of matching specified in\cr
+        \code{decomp="covariate"}.}
   \item{show}{Type of relative distribution to produce.  Possible values
-    are \code{"none"} (comparions to reference), \code{residual}
+    are \code{"none"} (comparisons to reference), \code{residual}
     (location-matched reference to reference), \code{effect} (comparison
     to location-matched reference).}
   \item{decomp}{Form of matching to the comparison sample.  Possible
     values are \code{locmult} (multiplicatively scale the reference),
     \code{locadd} (additively shift the reference), \code{lsadd}
     (location/scale additive shift), \code{covariate} (covariate adjust
-    the refernce (requires z and zo to be specified)).}
+    the reference (requires z and zo to be specified)).}
   \item{location}{How to measure location.  Possible values are
     \code{"mean"} and \code{"median"}.}
   \item{scale}{How to measure the scale.  Possible values are
@@ -107,6 +110,9 @@ deciles (i.e., 0.0, 0.1, 0.2,\dots,0.9, 1.0), but any set can be used
   \code{method="gam"} and \code{smooth} is less than 0.}
   \item{type}{Type of plot to use. See \code{par()}.}
   \item{cex}{Character expansion to use in plots. See \code{par()}.}
+  \item{y0}{A test to see if \code{yo} was passed. If \code{y0} is passed 
+    it prints a warning.  If \code{y0} is passed and \code{yo} is not passed 
+    then \code{y0} is used as the sample from reference distribution.}
   \item{\dots}{Additional arguments to the plot functions. See \code{par()}.}
 }
 \value{

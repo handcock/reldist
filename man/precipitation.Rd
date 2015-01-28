@@ -22,7 +22,7 @@
 \examples{
 require(graphics)
 data(precipitation)
-dotchart(precipitation[order(precipitation)], main = "precipitation data")
+dotchart(precipitation[order(precipitation)], main="precipitation data")
 title(sub = "Average annual precipitation (in.)")
 }
 \keyword{datasets}

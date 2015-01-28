@@ -6,9 +6,9 @@ reldistversion <- "1.6"
 reldistyear <- "1999"
 
 reldisttitle <- "Relative Distribution Methods"
-reldistdesc <- packageDescription("reldist")
-reldistversion <- reldistdesc$Version
-reldistdate <- reldistdesc$Date
+#reldistdesc <- packageDescription("reldist")
+reldistversion <- meta$Version
+reldistdate <- meta$Date
 s <- regexpr("20[0-9][0-9]", reldistdate)
 reldistyear <- ifelse (s==-1, "2003", substr(reldistdate, s, s+3))
 

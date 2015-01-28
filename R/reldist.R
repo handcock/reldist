@@ -18,7 +18,7 @@
 #
 #  Other software is available from  the Relative Distribution Website:
 #
-#  http://www.stat.washington.edu/~handcock/RelDist
+#  http://www.stat.ucla.edu/~handcock/RelDist
 #
 #  The website contains related software, descriptions of the variables
 #  and data file formats.
@@ -47,6 +47,7 @@
   deciles=(0:10)/10,
   discrete=FALSE,
   method="bgk",
+  y0=NULL,
   ...) {
 #
 # missing test
@@ -124,6 +125,14 @@
    "deciles",
    "method")
  #
+   if(!missing(y0)){
+     warning("You passed y0. Did you mean yo?")
+     if(missing(yo)){
+       yo <- y0	      
+       missargs["yo"] <- FALSE      
+       warning("y0 is being used as the sample from the reference distribution (in place of yo).")
+     }
+   }
    if(discrete){
     out <- rddist(
      y=y,
@@ -299,6 +308,7 @@
     if(bar){bar <- "yes"}else{bar <- "no"}
    }
    if(really.missing(yo,missargs)){
+    warning("The reference distribution, yo, was not passed. We will presume that y corresponds to a sample from a relative distribution directly.")
     m <- length(y)
     if(really.missing(ywgt,missargs)){ywgt <- rep(1/m,length=m)}
     y <- as.vector(y)
@@ -306,6 +316,10 @@
     ywgt <- as.vector(ywgt)[x]
     missargs[ "ywgt"] <- FALSE
     x <- y[x]
+    # Force to have support part of [0,1]
+    if(min(x,na.rm=TRUE) < 0 | max(x,na.rm=TRUE) > 1){
+      x <- (x-min(x,na.rm=TRUE))/(max(x,na.rm=TRUE)-min(x,na.rm=TRUE))
+    }
     m <- length(x)
     n <- 0
     rmd <- list(x=x,wgt=ywgt,n=n,m=m)
@@ -358,7 +372,8 @@
  #   and AIC to choose the bandwidth
  #   based on a grid search
  #
-   if(require(locfit, quietly = TRUE)){
+   locfit <- NULL
+   if(requireNamespace(locfit, quietly = TRUE)){
  #
      yl <- locfit::locfit(~ x, weights=ywgt, xlim=c(0,1),
            alpha=c(2*smooth,0.3), flim=c(0,1))
@@ -380,7 +395,7 @@
 #     and AICC to choose the bandwidth
 #     based on a grid search
 #
-#     require(mgcv, quietly = TRUE)
+#     requireNamespace(mgcv, quietly = TRUE)
       is.wholenumber <- function(x, tol = .Machine$double.eps^0.5){
         abs(x - round(x)) < tol
       }
@@ -430,7 +445,11 @@
 #
 #     Use Botev. Z.I., Grotowski J.F and Kroese D. P. (2010)
 #
-      a=bgk_kde(x,n=2^(ceiling(log(binn)/log(2))),MIN=0,MAX=1,smooth=4*smooth/0.35)
+      if(really.missing(smooth, missargs)){
+        a=bgk_kde(x,n=2^(ceiling(log(binn)/log(2))),MIN=0,MAX=1)
+      }else{
+        a=bgk_kde(x,n=2^(ceiling(log(binn)/log(2))),MIN=0,MAX=1,smooth=4*smooth/0.35)
+      }
 #     gpdf <- approx(x=a[1,],y=a[2,],xout=r,rule=2)$y
 #     Use an interpolating cubic spline
       gpdf <- spline(x=a[1,],y=a[2,],xout=r)$y
@@ -445,7 +464,7 @@
  #     Anscombe transformation to stabilize variances
  #     not quite as good
  #
- #     require(modreg, quietly = TRUE)
+ #     requireNamespace(modreg, quietly = TRUE)
  #
        vstxx <- 2*sqrt(m*xx + 3/8)
        yl <- loess(vstxx ~ r, span = smooth, degree = 1)
@@ -1544,6 +1563,8 @@ rddist <- function(y, yo, add=FALSE, ylim=NULL,ywgt=FALSE,yowgt=FALSE,
    m <- length(x)
    n <- 0
    wgt <- rep(1/m,length=m)
+   gx <- x
+   nx <- n
    pix <- wgt
    rmd <- list(x=x,wgt=wgt,n=n,m=m)
   }else{
@@ -1569,7 +1590,7 @@ rddist <- function(y, yo, add=FALSE, ylim=NULL,ywgt=FALSE,yowgt=FALSE,
   y2 <- rep(gx,c(rep(2,nx-1),4))[-1]             
   x2 <- c(rep(x,rep(2,nx)),1)  
 #
-# require(mgcv, quietly = TRUE)
+# requireNamespace(mgcv, quietly = TRUE)
   r <- seq(0, 1, length = binn + 1)[-1] - 0.5/binn
   pdfgdd <- approx(x=c(0,x),y=c(0,cumsum(pix)), xout=r)
   pdfgdd$y <- diff(c(0,pdfgdd$y))

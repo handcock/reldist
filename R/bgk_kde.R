@@ -28,6 +28,9 @@ bgk_kde <- function(data,n,MIN,MAX,smooth=1){
 # Annals of Statistics, 2010, Volume 38, Number 5, Pages 2916-2957
 # for questions email: botev@maths.uq.edu.au
 
+
+data=data[!is.na(data)]
+
 nargin=length(as.list(match.call()))-1;
 if (nargin<2) n=2^14
 n=2^ceiling(log2(n)); # round up n to the next power of 2;
@@ -38,11 +41,11 @@ if (nargin<4)
   MIN=minimum-Range/10; MAX=maximum+Range/10;
 }
 # set up the grid over which the density estimate is computed;
-R=MAX-MIN; dx=R/n; xmesh=MIN+seq(0,R,dx); N=length(data); 
+R=MAX-MIN; dx=R/n; xmesh=MIN+seq(from=0,to=R,by=dx); N=length(data); 
 # if data has repeated observations use the N below
 # N=length(as.numeric(names(table(data))));
 # bin the data uniformly using the grid defined above;
-w=hist(data,xmesh,plot=FALSE);initial_data=(w$counts)/N;
+w=hist(x=data,breaks=xmesh,plot=FALSE);initial_data=(w$counts)/N;
 initial_data=initial_data/sum(initial_data);
 
 dct1d <- function(data){

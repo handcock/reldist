@@ -1,5 +1,5 @@
 Package: reldist
-Version: 1.6-5
+Version: 1.6-6
 Date: 2015-01-01
 Title: Relative Distribution Methods
 Author: Mark S. Handcock <handcock@stat.ucla.edu>
@@ -10,7 +10,7 @@ Description: R functions for the comparison of distributions.
  "Relative Distribution Methods in the Social Sciences" 
  by Mark S. Handcock and Martina Morris, 
  Springer-Verlag, 1999, Springer-Verlag, ISBN 0387987789
-Imports: mgcv
+Imports: mgcv, Hmisc
 Suggests: locfit
 License: GPL-3 + file LICENSE
 URL: http://www.stat.ucla.edu/~handcock/RelDist

@@ -1,4 +1,3 @@
-#################################################################################
 # The <wtd.quantile> function determines and returns the weighted quantile of a
 # vector x
 #
@@ -12,31 +11,10 @@
 #   the weighted quantile    otherwise  
 #
 ################################################################################
-
+#' @importFrom Hmisc wtd.quantile
 wtd.quantile <- function(x, q=0.5, na.rm = FALSE, weight=FALSE) {
- 	if(mode(x) != "numeric")
- 		stop("need numeric data")
- 	if(missing(weight)|is.null(weight)){
-		return(quantile(x,probs=q,na.rm=na.rm))
-	}
- 	if(length(weight)!=length(x)){
-		return(quantile(x,probs=q,na.rm=na.rm))
-	}
- 	x <- as.vector(x)
- 	wnas <- is.na(x)
- 	if(sum(wnas)>0) {
- 		if(na.rm){
-		 x <- x[!wnas]
-		 weight <- weight[!wnas]
-		}else{
-			return(NA)
-		}
- 	}
- 	weight <- weight/sum(weight)
- 	sx <- sort.list(x)
- 	sweight <- cumsum(weight[sx])
- 	min(x[sx][sweight >= q])
- }
+	Hmisc::wtd.quantile(x=x,weights=weight,probs=q,na.rm=na.rm)
+}
 
 wtd.iqr <- function(x, na.rm = FALSE, weight=FALSE) {
   wtd.quantile(x, q=0.75, na.rm = na.rm, weight=weight)

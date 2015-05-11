@@ -1,4 +1,5 @@
-bgk_kde <- function(data,n,MIN,MAX,smooth=1){
+#' @keywords internal
+bgk_kde <- function(data,n,MIN,MAX,smooth=4){
 #       State-of-the-art gaussian kernel density estimator for one-dimensional data;
 #       The estimator does not use the commonly employed 'gaussian rule of thumb'.
 #       As a result it outperforms many plug-in methods on multimodal densities 
@@ -34,6 +35,7 @@ data=data[!is.na(data)]
 nargin=length(as.list(match.call()))-1;
 if (nargin<2) n=2^14
 n=2^ceiling(log2(n)); # round up n to the next power of 2;
+if(n < 8){n <- 8}
 if (nargin<4) 
 {# define the default  interval [MIN,MAX]
   minimum=min(data); maximum=max(data);

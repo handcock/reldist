@@ -1,15 +1,10 @@
 Package: reldist
 Version: 1.6-6
-Date: 2015-01-01
+Date: 2016-10-07
 Title: Relative Distribution Methods
 Author: Mark S. Handcock <handcock@stat.ucla.edu>
 Maintainer: Mark S. Handcock <handcock@stat.ucla.edu>
-Description: R functions for the comparison of distributions.
- This includes nonparametric estimation of the relative distribution
- PDF and CDF and numerical summaries as described in 
- "Relative Distribution Methods in the Social Sciences" 
- by Mark S. Handcock and Martina Morris, 
- Springer-Verlag, 1999, Springer-Verlag, ISBN 0387987789
+Description: Tools for the comparison of distributions. This includes nonparametric estimation of the relative distribution PDF and CDF and numerical summaries as described in "Relative Distribution Methods in the Social Sciences" by Mark S. Handcock and Martina Morris, Springer-Verlag, 1999, Springer-Verlag, ISBN 0387987789.
 Imports: mgcv, Hmisc
 Suggests: locfit
 License: GPL-3 + file LICENSE

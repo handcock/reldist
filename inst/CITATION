@@ -45,11 +45,11 @@ citEntry(entry="Manual",
                         ".  Project home page at \\ url{", projhomepage, "}", 
                         sep=""),
          address      = "Los Angeles, CA",
-         url          = "http://CRAN.R-project.org/package=reldist",
+         url          = "https://CRAN.R-project.org/package=reldist",
          textVersion = paste(paste(reldistauthors, collapse=", "), " (", reldistyear,
                "), ", reldisttitle, ". Version ", reldistversion,
                ". Project home page at ", projhomepage,
-               ". URL http://CRAN.R-project.org/package=reldist.",
+               ". URL https://CRAN.R-project.org/package=reldist.",
                sep="")
          )
 

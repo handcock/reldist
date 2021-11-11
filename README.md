@@ -66,7 +66,7 @@ reldist(y=recent$chpermwage, yo=original$chpermwage,
         ylim=c(0, 3.0),cex=0.8,
         ylab="Relative Density",
         xlab="Proportion of the Original Cohort")
-        ```
+```
         
 A CDF version.
 

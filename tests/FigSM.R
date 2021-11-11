@@ -1,7 +1,7 @@
 # The following code should generate all of the figures
 # (with the exception of figure 3) that are included 
 # in Handcock & Aldrich (2002).  The full report can be 
-# obtained at http://www.csss.washington.edu/Papers
+# obtained at SSRN: http://dx.doi.org/10.2139/ssrn.1515775
 
 library(reldist)
 data(nls, package="reldist")
@@ -103,6 +103,7 @@ fig2a <- reldist(y=recent$chpermwage,yo=original$chpermwage,ci=FALSE,
 	yolabs=seq(-1,3,by=0.5),
 	ylabs=seq(-1,3,by=0.5),
 	cex=0.8,
+        method="bgk",
         ylab="proportion of the recent cohort",
         xlab="proportion of the original cohort")
 title(main="(a)",cex=0.6)
@@ -112,6 +113,7 @@ fig2b <- reldist(y=recent$chpermwage,yo=original$chpermwage,ci=FALSE,
 	yowgt=original$wgt,ywgt=recent$wgt,bar=TRUE,
 	yolabs=seq(-1,3,by=0.5),
 	ylim=c(0,2.5),cex=0.8,
+        method="bgk",
         ylab="Relative Density",
         xlab="Proportion of the Original Cohort")
 title(main="(b)",cex=0.6)
@@ -138,6 +140,7 @@ fig3b <- reldist(y=recent$chpermwage,yo=original$chpermwage,ci=FALSE,
 	yowgt=original$wgt,ywgt=recent$wgt,bar=TRUE,
 	yolabs=seq(-1,3,by=0.5),
 	ylim=c(0,2.5),cex=0.8,
+        method="bgk",
         ylab="Relative Density",
         xlab="Proportion of the Original Cohort")
 title(main="(b)",cex=0.6)
@@ -177,8 +180,9 @@ g1A <- reldist(y=recent$chpermwage, yo=original$chpermwage,
 	bar=TRUE, quiet=FALSE,
 	ylim=c(0.5,3.0), ylab="",
 	smooth=0.4, ci=FALSE,
+        method="bgk",
 	yolabs=seq(-1,3,by=0.5),
-              xlab="proportion of the original cohort")
+        xlab="proportion of the original cohort")
 title(main=paste("(b) entropy = ",format(entropy(g1A,g10),digits=3)),cex=0.6)
 abline(h=1,lty=2)
 #
@@ -196,8 +200,9 @@ gA0 <- reldist(y=recent$chpermwage, yo=original$chpermwage, smooth=0.4, ci=FALSE
 	show="residual",
 	bar=TRUE, quiet=FALSE,
 	ylim=c(0.5,3.0), ylab="",
+        method="bgk",
 	yolabs=seq(-1,3,by=0.5),
-              xlab="proportion of the original cohort")
+        xlab="proportion of the original cohort")
 title(main=paste("(c) entropy = ",format(gA0$entropy,digits=3)),cex=0.6)
 abline(h=1,lty=2)
 #
@@ -224,8 +229,9 @@ e2[e2 > 18] <- 18
 pdf("Fig5.pdf", width=4.5,height=4.5)
 par(err=-1)
 g10 <- rddist(y=e2, yo=e1, pool=1, ci=FALSE, quiet=FALSE,
-        ywgt=recent$wgt,yowgt=original$wgt,
+              ywgt=recent$wgt,yowgt=original$wgt,
               yolabs=sort(unique(e1)),
+              method="bgk",
               ylab="relative density",
               xlab="proportion of the original cohort")
 title(sub=paste("entropy = ",format(entropy(g10),digits=3)))
@@ -258,6 +264,7 @@ g10 <- reldist(y=recent$chpermwage, yo=original$chpermwage, smooth=0.4, ci=FALSE
 	ywgt=recent$wgt, yowgt=original$wgt,
 	yolabs=seq(-1,3,by=0.5),
 	ylim=c(0.5,3.0),
+        method="bgk",
 	bar=TRUE, quiet=FALSE,
 	xlab="proportion of the original cohort")
 title(main=paste("(a) entropy = ",format(g10$entropy,digits=3)),cex=0.6)
@@ -278,8 +285,9 @@ g1A <- reldist(y=schpermwage1, yo=original$chpermwage,
 	bar=TRUE, quiet=FALSE,
 	ylim=c(0.5,3.0), ylab="",
 	smooth=0.4, ci=FALSE,
+        method="bgk",
 	yolabs=seq(-1,3,by=0.5),
-              xlab="proportion of the original cohort")
+        xlab="proportion of the original cohort")
 title(main=paste("(b) entropy = ",format(entropy(g1A,g10),digits=3)),cex=0.6)
 abline(h=1,lty=2)
 #
@@ -297,7 +305,8 @@ gA0 <- reldist(y=recent$chpermwage, yo=schpermwage1, smooth=0.4, ci=FALSE,
 	bar=TRUE, quiet=FALSE,
 	ylim=c(0.5,3.0), ylab="",
 	yolabs=seq(-1,3,by=0.5),
-              xlab="proportion of the original cohort")
+        method="bgk",
+        xlab="proportion of the original cohort")
 title(main=paste("(c) entropy = ",format(gA0$entropy,digits=3)),cex=0.6)
 abline(h=1,lty=2)
 #
@@ -390,6 +399,7 @@ g10hs <- reldist(y=pwhsr, yo=pwhso, ci=FALSE, smooth=0.4,
 	ywgt=wgthsr, yowgt=wgthso,
 	bar=TRUE, quiet=FALSE,
 	ylim=c(0,4),
+        method="bgk",
         xlab="proportion of the original cohort")
 title(main=paste("(b) entropy = ",format(g10hs$entropy,digits=3)),cex=0.6)
 abline(h=1,lty=2)
@@ -416,6 +426,7 @@ g10sc <- reldist(y=pwscr, yo=pwsco, ci=FALSE, smooth=0.4,
 	ywgt=wgtscr, yowgt=wgtsco,
 	bar=TRUE, quiet=FALSE,
 	ylim=c(0,4),
+        method="bgk",
         xlab="proportion of the original cohort")
 title(main=paste("(d) entropy = ",format(g10sc$entropy,digits=3)),cex=0.6)
 abline(h=1,lty=2)
@@ -430,8 +441,10 @@ collectresults <- c(
   exp(wtd.quantile(pwhsr,weight=wgthsr)-wtd.quantile(pwhso,weight=wgthso)),
   g10hs$entropy,
   g10hs$entropy-reldist(y=pwhsr, yo=pwhso, ywgt=wgthsr, yowgt=wgthso, quiet=FALSE,
+                     method="bgk",
                      show="residual",graph=FALSE)$entropy,
   reldist(y=pwhsr, yo=pwhso, ywgt=wgthsr, yowgt=wgthso, quiet=FALSE,
+                     method="bgk",
                      show="residual",graph=FALSE)$entropy,
   g10hs$rp[2],
   g10hs$rpl[2],
@@ -445,8 +458,10 @@ collectresults <- cbind(collectresults,c(
   exp(wtd.quantile(pwscr,weight=wgtscr)-wtd.quantile(pwsco,weight=wgtsco)),
   g10sc$entropy,
   g10sc$entropy-reldist(y=pwscr, yo=pwsco, ywgt=wgtscr, yowgt=wgtsco, quiet=FALSE,
+                     method="bgk",
                      show="residual",graph=FALSE)$entropy,
   reldist(y=pwscr, yo=pwsco, ywgt=wgtscr, yowgt=wgtsco, quiet=FALSE,
+                     method="bgk",
                      show="residual",graph=FALSE)$entropy,
   g10sc$rp[2],
   g10sc$rpl[2],

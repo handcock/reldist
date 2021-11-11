@@ -1,11 +1,14 @@
 importFrom(utils, packageDescription)
 importFrom(mgcv, gam, predict.gam)
 importFrom(Hmisc, wtd.quantile)
+importFrom(splines,spline.des)
+importFrom(densEstBayes, densEstBayes)
+importFrom(densEstBayes, densEstBayes.control)
 #
 importFrom("graphics", "abline", "axis", "barplot", "hist", "lines",
              "plot", "points", "segments")
 importFrom("stats", "approx", "fft", "loess", "median", "pnorm",
-             "predict", "spline", "uniroot", "var")
+             "predict", "spline", "uniroot", "var","quantile","sd")
 
 # Export all names that do not begin with a dot.
 exportPattern("^[^\\.]")

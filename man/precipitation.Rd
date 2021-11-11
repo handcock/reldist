@@ -6,7 +6,7 @@
   The average amount of precipitation (rainfall) in inches for each of
   70 United States (and Puerto Rico) cities.
 }
-\usage{precipitation}
+\usage{data(precipitation)}
 \format{
   A named vector of length 70.
 }

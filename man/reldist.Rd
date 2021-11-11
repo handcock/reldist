@@ -22,12 +22,13 @@ reldist(y, yo=FALSE, ywgt=FALSE,yowgt=FALSE,
   ylabs=pretty(y), ylabslabs=NULL,
   yolabsloc=0.6, ylabsloc=1, 
   ylim=NULL, cex=0.8, lty=1,
-  binn=100,
+  binn=5000,
   aicc=seq(0.0001, 5, length=30),
   deciles=(0:10)/10,
   discrete=FALSE,
-  method="bgk",
+  method="Bayes",
   y0=NULL,
+  control = list(samples = 4000, burnin = 1000),
   \dots)
 }
 \arguments{
@@ -45,7 +46,8 @@ reldist(y, yo=FALSE, ywgt=FALSE,yowgt=FALSE,
     it is the minimum number of values to pool in the reference
     distribution in the probability mass function estimate.}
   \item{method}{Method used to estimate the relative density. The default
-    (\code{"bgk"}) uses a Gaussian kernel density estimator for bounded
+    (\code{"Bayes"}) uses a density estimator based on Poisson Nonparametric Regression and Bayesian inference developed by Wand and Wu (2022).
+    The option (\code{"bgk"}) uses a Gaussian kernel density estimator for bounded
     domain one-dimensional data developed by Botev, Grotowski and Kroese
     (2010). The option (\code{"gam"}) uses a local likelihood approach
     based on smoothed Poisson regression. The option \code{"loclik"} uses
@@ -113,6 +115,8 @@ deciles (i.e., 0.0, 0.1, 0.2,\dots,0.9, 1.0), but any set can be used
   \item{y0}{A test to see if \code{yo} was passed. If \code{y0} is passed 
     it prints a warning.  If \code{y0} is passed and \code{yo} is not passed 
     then \code{y0} is used as the sample from reference distribution.}
+  \item{control}{list; A simple list of control options for the STAN HMC computation used when \code{method="Bayes"}, the default.
+    The two components are \code{samples=4000}, the number of samples drawn and \code{burnin=1000}, the burn-in used.}
   \item{\dots}{Additional arguments to the plot functions. See \code{par()}.}
 }
 \value{
@@ -144,7 +148,7 @@ data(nls, package="reldist")
 # A simple example comparing permanent wages of the original to the
 # recent cohort in the NLS.  See H&M (1999) for details.
 
-reldist(y=recent$chpermwage,yo=original$chpermwage)
+reldist(y=recent$chpermwage,yo=original$chpermwage,method="bgk")
 
 #
 # A more sophisticated version of the same.
@@ -153,7 +157,7 @@ reldist(y=recent$chpermwage,yo=original$chpermwage)
 reldist(y=recent$chpermwage, yo=original$chpermwage,
         yowgt=original$wgt, ywgt=recent$wgt,      
         bar=TRUE,                                   
-        smooth=0.1,                              
+        smooth=0.1, method="bgk",                             
         yolabs=seq(-1, 3, by=0.5),                 
         ylim=c(0, 3.0),cex=0.8,                   
         ylab="Relative Density",                 
@@ -170,15 +174,23 @@ reldist(y=recent$chpermwage, yo=original$chpermwage,
     yolabs=seq(-1,3,by=0.5),                 
     ylabs=seq(-1,3,by=0.5),                  
     cex=0.8,                                 
+    method="bgk",                             
     ylab="proportion of the recent cohort",  
     xlab="proportion of the original cohort")
 }
 \references{
-For more examples see the tech report by Handcock & Aldrich (2002)
-available at \url{http://www.csss.washington.edu/Papers}
+For more examples see the tech report
+
+Mark S. Handcock and Eric Mark Aldrich \emph{Applying Relative Distribution Methods in R}
+University of Washington CSSS Working Paper No.
+27, Available at SSRN: \doi{10.2139/ssrn.1515775}.
 
 Z. I. Botev, J. F. Grotowski and D. P. Kroese
 \emph{Kernel Density Estimation Via Diffusion}
 Annals of Statistics, 2010, Volume 38, Number 5, Pages 2916-2957.
+
+M. Wand and J. C. F. Yu
+\emph{Density Estimation via Bayesian Inference Engines}
+AStA Advances in Statistical Analysis, 2021, \doi{10.1007/s10182-021-00422-8}.
 }
 \keyword{distribution}

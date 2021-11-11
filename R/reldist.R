@@ -18,7 +18,7 @@
 #
 #  Other software is available from  the Relative Distribution Website:
 #
-#  http://www.stat.ucla.edu/~handcock/RelDist
+#  http://www.stat.ucla.edu/~handcock/RelDist/
 #
 #  The website contains related software, descriptions of the variables
 #  and data file formats.
@@ -42,12 +42,13 @@
   ylabs=pretty(y), ylabslabs=NULL, 
   yolabsloc=0.6, ylabsloc=1, 
   ylim=NULL, cex=0.8, lty=1,
-  binn=100,
+  binn=5000,
   aicc=seq(0.0001, 5, length=30),
   deciles=(0:10)/10,
   discrete=FALSE,
-  method="bgk",
+  method="Bayes",
   y0=NULL,
+  control=list(samples=4000, burnin=1000),
   ...) {
 #
 # missing test
@@ -187,6 +188,7 @@
      aicc=aicc,
      deciles=deciles,
      method=method, missargs=missargs,
+     control=list(samples=4000, burnin=1000),
      ...)
    }
    if(!quiet){
@@ -215,6 +217,7 @@
           aicc=seq(0.00001, 5, length=30),
           deciles=(0:10)/10,
           method="quick", missargs,
+          control=list(samples=4000, burnin=1000),
           ...) {
  #
  #	# INPUT variables
@@ -366,6 +369,7 @@
    xx <- as.vector(xx)
    gpdf <- xx
  #
+   entropy.Bayes <- NULL
    if(method=="loclik"){
  #
  #   Use local-likelihood density estimation 
@@ -373,7 +377,7 @@
  #   based on a grid search
  #
    locfit <- NULL
-   if(requireNamespace(locfit, quietly = TRUE)){
+   if(requireNamespace("locfit", quietly = TRUE)){
  #
      yl <- locfit::locfit(~ x, weights=ywgt, xlim=c(0,1),
            alpha=c(2*smooth,0.3), flim=c(0,1))
@@ -441,6 +445,40 @@
       }
     }
 #
+   if(method=="Bayes"){
+#
+#     Use Bayes
+#
+   if(requireNamespace("densEstBayes", quietly = TRUE)){
+      if(really.missing(smooth, missargs)){
+        a=densEstBayes::densEstBayes(x,method="NUTS",
+          control=densEstBayes::densEstBayes.control(range.x=c(0,1),numBins=401,numBasis=50,nWarm=control$burnin))
+      }else{
+        a=densEstBayes::densEstBayes(x,method="NUTS",
+          control=densEstBayes::densEstBayes.control(range.x=c(0,1),numBins=401,numBasis=round(smooth*50/0.35),
+                                                     nKept=control$samples,nWarm=control$burnin))
+      }
+      Xg <- cbind(1,r)
+      Zg <- .ZOSull(r,intKnots=a$intKnots,range.x=c(-0.05,1.05))
+      Cg <- cbind(Xg,Zg)
+      betauMCMC <- a$stochaFitObj$betauMCMC
+      etaHatMCMC <- crossprod(t(Cg),betauMCMC)
+    # etaHatg <- apply(etaHatMCMC,1,mean)
+    # densEstUnng <- exp(etaHatg)
+    # normFac <- .trapint(r,densEstUnng)
+    # gpdf <- densEstUnng / normFac
+#
+      normFac <- apply(exp(etaHatMCMC),2,function(gpdf){.trapint(r,gpdf)})
+      etaHatMCMC <- sweep(exp(etaHatMCMC),2,normFac,"/")
+      gpdf <- apply(etaHatMCMC,1,mean)
+#
+      scalef <- binn
+#     entropy
+      ev <- apply(etaHatMCMC,2,function(gpdf){ .trapint(r,gpdf*log(gpdf)) })
+      entropy.Bayes <- list(mean=mean(ev), sd=sd(ev), lower=quantile(ev,0.025), upper=quantile(ev,0.975) )
+   }else{
+    method="bgk"
+   }}
    if(method=="bgk"){
 #
 #     Use Botev. Z.I., Grotowski J.F and Kroese D. P. (2010)
@@ -737,6 +775,7 @@
        list(x=r,y=gpdf,ci=gpdf.ci,
         rp = rpm, rpl= rpl, rpu= rpu,
         cdf=cdf.out, deciles=cdfgdd, entropy=entropy,
+        entropy.Bayes=entropy.Bayes,
         smooth=smooth,aicc=aicc
        )
    }else{
@@ -744,6 +783,7 @@
        list(x=r,y=gpdf,ci=gpdf.ci,
         rp = rpm, rpl= rpl, rpu= rpu,
         cdf=cdf.out, deciles=cdfgdd, entropy=entropy,
+        entropy.Bayes=entropy.Bayes,
         smooth=smooth,aicc=aicc
        )
       )
@@ -1970,7 +2010,7 @@ rdeciles <- function(y, yo, ywgt=FALSE,yowgt=FALSE,
 #  out
 #}
 resplot <- function(x, standardize=TRUE,
-                    xlab="Gaussian Cumulative Proportion", ...){
+                    xlab="Gaussian Cumulative Proportion", method="Bayes", ...){
   if(standardize){
    stdres <- ( x - mean(x, na.rm=TRUE) ) / sqrt(var(x, na.rm=TRUE)) 
   }else{
@@ -1979,5 +2019,5 @@ resplot <- function(x, standardize=TRUE,
   xrange <- range(c(0,2,reldist(y=pnorm(q=stdres), graph=FALSE, ...)$y))
   reldist(y=pnorm(q=stdres),
           ylim=xrange,
-          xlab=xlab, ...)
+          xlab=xlab, method=method, ...)
 }

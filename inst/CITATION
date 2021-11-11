@@ -1,5 +1,5 @@
 reldistauthors <- c("Mark S. Handcock")
-projhomepage <- "http://www.stat.ucla.edu/~handcock/RelDist"
+projhomepage <- "http://www.stat.ucla.edu/~handcock/RelDist/"
 
 reldisttitle <- "Relative Distribution Methods"
 reldistversion <- "1.6"
@@ -27,13 +27,13 @@ citEntry(entry="Book",
          address      = "New York",
          year         = 1999,
          note         = "ISBN 0-387-98778-9",
-         url          = "http://www.stat.ucla.edu/~handcock/RelDist",
+         url          = "http://www.stat.ucla.edu/~handcock/RelDist/",
          
          textVersion = 
          paste("Mark S. Handcock and Martina Morris (1999)", 
                "Relative Distribution Methods in the Social Sciences.",
                "Springer, New York, ISBN 0-387-98778-9.",
-               "URL http://www.stat.ucla.edu/~handcock/RelDist"
+               "URL http://www.stat.ucla.edu/~handcock/RelDist/"
                )
          )
 

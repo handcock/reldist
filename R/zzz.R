@@ -1,3 +1,5 @@
+globalVariables("precipitation")
+
 .onAttach <- function(libname, pkgname){
   temp<-packageDescription("reldist")
   msg<-paste(temp$Package,": ",temp$Title,"\n",

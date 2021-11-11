@@ -188,7 +188,7 @@
      aicc=aicc,
      deciles=deciles,
      method=method, missargs=missargs,
-     control=list(samples=4000, burnin=1000),
+     control=control,
      ...)
    }
    if(!quiet){
@@ -452,7 +452,8 @@
    if(requireNamespace("densEstBayes", quietly = TRUE)){
       if(really.missing(smooth, missargs)){
         a=densEstBayes::densEstBayes(x,method="NUTS",
-          control=densEstBayes::densEstBayes.control(range.x=c(0,1),numBins=401,numBasis=50,nWarm=control$burnin))
+          control=densEstBayes::densEstBayes.control(range.x=c(0,1),numBins=401,numBasis=50,
+                                                     nKept=control$samples,nWarm=control$burnin))
       }else{
         a=densEstBayes::densEstBayes(x,method="NUTS",
           control=densEstBayes::densEstBayes.control(range.x=c(0,1),numBins=401,numBasis=round(smooth*50/0.35),
@@ -475,7 +476,8 @@
       scalef <- binn
 #     entropy
       ev <- apply(etaHatMCMC,2,function(gpdf){ .trapint(r,gpdf*log(gpdf)) })
-      entropy.Bayes <- list(mean=mean(ev), sd=sd(ev), lower=quantile(ev,0.025), upper=quantile(ev,0.975) )
+      entropy.Bayes <- list(mean=mean(ev), sd=sd(ev), lower=quantile(ev,0.025), upper=quantile(ev,0.975),
+                            posterior=ev)
    }else{
     method="bgk"
    }}

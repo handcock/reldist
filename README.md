@@ -1,4 +1,4 @@
-<img src="man/Figures/rdmshmm.gif" width = 700 alt="RDbook banner"/>
+<img src="man/Figures/rdbanner.gif" width = 700 alt="RDbook banner"/>
 
 # The reldist package
 

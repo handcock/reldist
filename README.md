@@ -2,7 +2,7 @@
 
 This is an R package to implementing relative distribution methods.
 These methods are described in the book 
-[(Relative Distribution Methods in the Social Sciences)](https://doi.org/10.1007/b97852), by Mark S. Handcock and Martina Morris, Springer-Verlag, Inc., New York, 1999 ISBN 0387987789 .
+[Relative Distribution Methods in the Social Sciences](https://doi.org/10.1007/b97852), by Mark S. Handcock and Martina Morris, Springer-Verlag, Inc., New York, 1999 ISBN 0387987789 .
 
 It was developed by Mark S. Handcock.
 
@@ -35,8 +35,7 @@ devtools::install_github("handcock/reldist")
 
 ## Resources
 
-* For a more detailed description of what can be done with the ``reldist`` package, **[see the introductory
-* vignette by Handcock & Aldrich (2002) obtained at SSRN: (http://dx.doi.org/10.2139/ssrn.1515775)]**
+* For a more detailed description of what can be done with the ``reldist`` package, [see the introductory vignette by Handcock & Aldrich (2002) obtained at SSRN: (http://dx.doi.org/10.2139/ssrn.1515775)]
 
 To run an example use:
 ```

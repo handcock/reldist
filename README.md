@@ -35,7 +35,7 @@ devtools::install_github("handcock/reldist")
 
 ## Resources
 
-* For a more detailed description of what can be done with the ``reldist`` package, [see the introductory vignette by Handcock & Aldrich (2002) obtained at SSRN: (http://dx.doi.org/10.2139/ssrn.1515775)]
+* For a more detailed description of what can be done with the ``reldist`` package, see the introductory vignette by Handcock & Aldrich (2002) obtained at SSRN: http://dx.doi.org/10.2139/ssrn.1515775
 
 To run an example use:
 ```

@@ -40,11 +40,11 @@ devtools::install_github("handcock/reldist")
 To run an example use:
 ```
 library(reldist)
+```
 
-#
-# First load the data.
-#
+First load the data:
 
+```
 data(nls, package="reldist")
 ```
 

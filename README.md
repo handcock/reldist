@@ -1,4 +1,4 @@
-<img src="man/figures/bflogo.png" width = 120 alt="bayesbackcast Logo"/>
+<img src="man/Figures/rdmshmm.gif" width = 120 alt="bayesbackcast Logo"/>
 
 # The reldist package
 

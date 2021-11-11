@@ -1,3 +1,5 @@
+<img src="man/figures/bflogo.png" width = 120 alt="bayesbackcast Logo"/>
+
 # The reldist package
 
 This is an R package to implement relative distribution methods.

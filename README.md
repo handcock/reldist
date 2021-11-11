@@ -1,6 +1,6 @@
 # The reldist package
 
-This is an R package to implementing relative distribution methods.
+This is an R package to implement relative distribution methods.
 These methods are described in the book 
 [Relative Distribution Methods in the Social Sciences](https://doi.org/10.1007/b97852), by Mark S. Handcock and Martina Morris, Springer-Verlag, Inc., New York, 1999 ISBN 0387987789 .
 

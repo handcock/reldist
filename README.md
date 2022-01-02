@@ -8,7 +8,7 @@ These methods are described in the book
 
 It was developed by Mark S. Handcock.
 
-It is software to estimate and graph the relative density, CDF and related functions. Also functions to estimate summary measures and their uncertainties. This contains functions directly related to the relative distribution and some data used in the book.
+It is software to estimate and graph the relative density, cumulative distribution function (CDF) and related functions. Also functions to estimate summary measures and their uncertainties. This contains functions directly related to the relative distribution and some data used in the book.
 
 ## Installation
 <!-- To install the latest version from [CRAN](https://CRAN.R-project.org/package=ipc) -->
@@ -83,12 +83,4 @@ reldist(y=recent$chpermwage, yo=original$chpermwage,
     xlab="proportion of the original cohort")
 ```
 
-There is more informatin and working examples on the website: http://www.stat.ucla.edu/~handcock/RelDist/
-
-## Development
-
-[Development Practices and Policies for Contributers](../../wiki/How-to-Contribute:-Git-Practices)
-
-<!-- badges: start -->
- [![R-CMD-check](https://github.com/handcock/rpm/workflows/R-CMD-check/badge.svg)](https://github.com/handcock/rpm/actions)
-<!-- badges: end -->
+There is more information and working examples on the website: http://www.stat.ucla.edu/~handcock/RelDist/

@@ -2018,7 +2018,7 @@ resplot <- function(x, standardize=TRUE,
   }else{
    stdres <- x[!is.na(x)]
   }
-  xrange <- range(c(0,2,reldist(y=pnorm(q=stdres), graph=FALSE, ...)$y))
+  xrange <- range(c(0,2,reldist(y=pnorm(q=stdres), graph=FALSE, method=method, ...)$y))
   reldist(y=pnorm(q=stdres),
           ylim=xrange,
           xlab=xlab, method=method, ...)

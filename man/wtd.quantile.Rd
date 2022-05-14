@@ -5,14 +5,14 @@
   Compute weighted quantile
   }
 \usage{
-wtd.quantile (x, q=0.5, na.rm = FALSE, weight=FALSE)
+wtd.quantile (x, q=0.5, na.rm = FALSE, weight=NULL)
 } 
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{ Vector of data, same length as \code{weight} }
   \item{q}{ Quantile to compute }
   \item{na.rm}{Logical:  Should NAs be stripped before computation proceeds?}
-  \item{weight}{ Vector of weights }
+  \item{weight}{ Vector of weights.  If NULL, the default, weights are not used. }
 }
 \details{
  Uses a simple algorithm based on sorting.

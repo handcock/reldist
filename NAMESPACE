@@ -1,6 +1,5 @@
 importFrom(utils, packageDescription)
 importFrom(mgcv, gam, predict.gam)
-importFrom(Hmisc, wtd.quantile)
 importFrom(splines,spline.des)
 importFrom(densEstBayes, densEstBayes)
 importFrom(densEstBayes, densEstBayes.control)

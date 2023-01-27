@@ -83,4 +83,4 @@ reldist(y=recent$chpermwage, yo=original$chpermwage,
     xlab="proportion of the original cohort")
 ```
 
-There is more information and working examples on the website: http://www.stat.ucla.edu/~handcock/RelDist/
+There is more information and working examples on the website: http://faculty.stat.ucla.edu/handcock/RelDist/

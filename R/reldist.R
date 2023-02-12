@@ -18,7 +18,7 @@
 #
 #  Other software is available from  the Relative Distribution Website:
 #
-#  http://www.stat.ucla.edu/~handcock/RelDist/
+#  http://faculty.stat.ucla.edu/handcock/RelDist/
 #
 #  The website contains related software, descriptions of the variables
 #  and data file formats.

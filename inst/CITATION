@@ -1,28 +1,37 @@
-reldistauthors <- c("Mark S. Handcock")
-projhomepage <- "http://faculty.stat.ucla.edu/handcock/RelDist/"
+citHeader(paste0("If you are using ideas from the 'Relative Distribution Methods' book for research that will be published, ",
+   "we request that you acknowledge this by citing the book as shown below.\n\n","If you are using the package ", sQuote("reldist"), "for research that will be published, we request that you acknowledge this by citing the following.\n",
+    "For BibTeX format, use toBibtex(citation(\"", "reldist", "\"))."))
 
-reldisttitle <- "Relative Distribution Methods"
-reldistversion <- "1.6"
-reldistyear <- "1999"
+bibentry(bibtype="Manual",
+  title = paste(meta$Package,": ", meta$Title, sep=""),
+  author = structure(list(
+   list(given = "Mark S.", family = "Handcock", role = c("aut", "cre"), email = "handcock@stat.ucla.edu",
+        comment = c(ORCID = "0000-0002-9985-2785"))
+       ), class="person"),
+         year         = substr(meta$Date,1,4),
+         note         = paste("R package version ", meta$Version, sep=""),
+         address      = "Los Angeles, CA",
+         url          = "https://CRAN.R-project.org/package=reldist",
+         
+         textVersion = 
+         paste("Mark S. Handcock (2012) ", 
+               paste(meta$Package,": ", meta$Title, sep=""),
+               ", Version ", meta$Version, ". Project home page at http://faculty.stat.ucla.edu/handcock/RelDist/",
+               ",", " URL https://CRAN.R-project.org/package=reldist.",
+               sep="")
+         )
 
-reldisttitle <- "Relative Distribution Methods"
-#reldistdesc <- packageDescription("reldist")
-reldistversion <- meta$Version
-reldistdate <- meta$Date
-s <- regexpr("20[0-9][0-9]", reldistdate)
-reldistyear <- ifelse (s==-1, "2003", substr(reldistdate, s, s+3))
+citFooter("We have invested a lot of time and effort in creating the",
+          "'reldist' package for use by other researchers.",
+          "Please cite it in all papers where it is used.")
 
-citHeader(
-   "If you are using ideas from the 'Relative Distribution Methods' book for research that will be published, ",
-   "we request that you acknowledge this by citing the book as shown below.\n\n",
-   "If you use this 'reldist' package, please also use the second citation below.\n\n",
-   'For BibTeX format, use toBibtex(citation("reldist")).',
-   sep="")
-   
-citEntry(entry="Book",
+bibentry(bibtype="Book",
          title = "Relative Distribution Methods in the Social Sciences",
-         author = personList(as.person("Mark S. Handcock"),
-                             as.person("Martina Morris")), 
+         author = structure(list(
+          list(given = "Mark S.", family = "Handcock", role = c("aut", "cre"), email = "handcock@stat.ucla.edu",
+               comment = c(ORCID = "0000-0002-9985-2785")),
+          list(given = "Martina", family = "Morris", role = "aut", email = "morrism@uw.edu", comment = NULL)
+              ), class="person"),
          publisher = "Springer",
          address      = "New York",
          year         = 1999,
@@ -36,25 +45,3 @@ citEntry(entry="Book",
                "URL http://faculty.stat.ucla.edu/handcock/RelDist/"
                )
          )
-
-citEntry(entry="Manual",
-         author = reldistauthors,
-         title = reldisttitle,
-         year         = reldistyear,
-         note         = paste("Version ", reldistversion,
-                        ".  Project home page at \\ url{", projhomepage, "}", 
-                        sep=""),
-         address      = "Los Angeles, CA",
-         url          = "https://CRAN.R-project.org/package=reldist",
-         textVersion = paste(paste(reldistauthors, collapse=", "), " (", reldistyear,
-               "), ", reldisttitle, ". Version ", reldistversion,
-               ". Project home page at ", projhomepage,
-               ". URL https://CRAN.R-project.org/package=reldist.",
-               sep="")
-         )
-
-         
-citFooter("We have invested a lot of time and effort in creating the",
-          "'reldist' package for use by other researchers.",
-          "Please cite it in all papers where it is used.")
-          

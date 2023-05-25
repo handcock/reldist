@@ -35,7 +35,7 @@ devtools::install_github("handcock/reldist")
 
 ## Resources
 
-* For a more detailed description of what can be done with the ``reldist`` package, see the introductory vignette by Handcock & Aldrich (2002) obtained at SSRN: http://dx.doi.org/10.2139/ssrn.1515775
+* For a more detailed description of what can be done with the ``reldist`` package, see the introductory vignette by Handcock & Aldrich (2002) obtained at SSRN: https://dx.doi.org/10.2139/ssrn.1515775
 
 To run an example use:
 ```
@@ -83,4 +83,4 @@ reldist(y=recent$chpermwage, yo=original$chpermwage,
     xlab="proportion of the original cohort")
 ```
 
-There is more information and working examples on the website: http://faculty.stat.ucla.edu/handcock/RelDist/
+There is more information and working examples on the website: https://faculty.stat.ucla.edu/handcock/RelDist/
